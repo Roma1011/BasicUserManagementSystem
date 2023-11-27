@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>11</LangVersion>
+        <RootNamespace>Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Authentication" />
+      <Folder Include="Enums" />
+      <Folder Include="Security\PasswordService" />
+      <Folder Include="Security\TokenService" />
+    </ItemGroup>
+
+</Project>
