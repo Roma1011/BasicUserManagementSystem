@@ -29,7 +29,6 @@ public class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEntit
 
     public Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) =>
         _set.FirstAsync(expression, cancellationToken);
-    
     public void Add(TEntity entity) => _set.Add(entity);
 
     public ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -39,8 +38,13 @@ public class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEntit
     }
     public void Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        if (!_set.Local.Contains(entity))
+        {
+            _set.Attach(entity);
+        }
+        _context.Entry(entity).State = EntityState.Modified;
     }
+
 
     public ValueTask UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {

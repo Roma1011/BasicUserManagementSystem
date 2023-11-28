@@ -1,20 +1,21 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Persistance.Configuration;
 
-namespace Persistance.DatabseContext;
-
-public class UserManagementDbContext:DbContext
+namespace Persistance.DatabseContext
 {
-    public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options) : base(options)
-    { }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class UserManagementDbContext : DbContext
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserManagementDbContext).Assembly);
-        
-        //seald adding later
-        base.OnModelCreating(modelBuilder);
+        public UserManagementDbContext(DbContextOptions<UserManagementDbContext> options) : base(options)
+        { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserManagementDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
     }
-    public DbSet<User> Users { get; set; }
-    public DbSet<UserProfile> UserProfiles { get; set; }
 }

@@ -1,99 +1,55 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities;
+using Domain.IServices.ISecuriyServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistance.Constants;
 
 namespace Persistance.Configuration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
+        private readonly IPasswordService _passwordService;
+
+        public UserConfiguration(IPasswordService passwordService)
+        {
+            _passwordService = passwordService;
+        }
+
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            List<User> userList = new List<User>
+            builder.ToTable(TableNames.Users);
+            builder.HasKey(i => i.UserId);
+            
+            builder.Property(i => i.UserName).HasColumnType(DbTypes.Varchar).HasMaxLength(60).IsRequired();
+            builder.Property(i => i.Email).HasColumnType(DbTypes.Varchar).HasMaxLength(50).IsRequired();
+            builder.Property(i => i.IsActive).HasColumnType(DbTypes.Boolean).HasMaxLength(50).IsRequired();
+            builder.Property(i => i.Password).HasColumnType(DbTypes.Varbinary).IsRequired();
+            
+            builder.HasOne(u => u.UserProfile)
+                .WithOne()
+                .HasForeignKey<User>(u => u.UserProfileId);
+            
+            builder.HasData(SeedDataGenerator(_passwordService));
+        }
+        private static IEnumerable<User> SeedDataGenerator(IPasswordService passwordService)
+        {
+            var users = Enumerable.Range(1, 10).Select(i => new User
             {
-                new User
+                UserId = i,
+                UserName = $"User{i}",
+                Password = passwordService.HashPassword($"Password{i}"),
+                Email = $"user{i}@example.com",
+                IsActive = true,
+                UserProfile = new UserProfile
                 {
-                    UserId = 1,
-                    UserName = "Admin",
-                    Password = "Admin1",
-                    Email = "Admin1@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 2,
-                    UserName = "AnotherUser1",
-                    Password = "Password123",
-                    Email = "user1@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 3,
-                    UserName = "User3",
-                    Password = "SecurePassword",
-                    Email = "user3@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 4,
-                    UserName = "TestUser4",
-                    Password = "Test123",
-                    Email = "testuser4@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 5,
-                    UserName = "NewUser5",
-                    Password = "NewPassword",
-                    Email = "newuser5@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 6,
-                    UserName = "DemoUser6",
-                    Password = "DemoPassword",
-                    Email = "demouser6@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 7,
-                    UserName = "AlphaUser7",
-                    Password = "Alpha123",
-                    Email = "alphauser7@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 8,
-                    UserName = "BetaUser8",
-                    Password = "Beta456",
-                    Email = "betauser8@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 9,
-                    UserName = "GammaUser9",
-                    Password = "Gamma789",
-                    Email = "gammauser9@example.com",
-                    IsActive = true
-                },
-                new User
-                {
-                    UserId = 10,
-                    UserName = "FinalUser10",
-                    Password = "FinalPassword",
-                    Email = "finaluser10@example.com",
-                    IsActive = true
+                    FirstName = $"First{i}",
+                    LastName = $"Last{i}",
+                    PersonalNumber = 1000000000 + i
                 }
-            };
-
-            builder.HasData(userList);
+            }).ToList();
+            return users;
         }
     }
+    
 }
