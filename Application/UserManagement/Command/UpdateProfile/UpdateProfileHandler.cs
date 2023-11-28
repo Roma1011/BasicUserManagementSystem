@@ -18,7 +18,7 @@ public class UpdateProfileHandler : IRequestHandler<UpdateProfileCommand, bool>
 
     public async Task<bool> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
     {
-        var userToUpdate = await _unitOfWork.UserRepository.GetAsync(i => i.UserId == request.Id && i.IsActive !=false);
+        var userToUpdate = await _unitOfWork.UserRepository.GetAsync(i => i.Email == request.ProfileDto.Email && i.IsActive !=false);
         if (userToUpdate is null)
         {
             throw new UserNotAvailableException();

@@ -1,4 +1,5 @@
 using Application;
+using BasicUserManagementSystem.Middleware;
 //using BasicUserManagementSystem.MiddleWares.Exception;
 using Infrastructure;
 using Persistance;
@@ -22,7 +23,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-//app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();

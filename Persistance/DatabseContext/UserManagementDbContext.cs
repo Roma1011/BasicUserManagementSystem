@@ -15,6 +15,7 @@ namespace Persistance.DatabseContext
             base.OnModelCreating(modelBuilder);
         }
 
+
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
     }

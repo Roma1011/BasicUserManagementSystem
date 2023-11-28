@@ -27,7 +27,9 @@ public class UserManagementController:ControllerBase
         _mediator = mediator;
         _mapper = mapper;
     }
-
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpGet("getuserprofile")]
     public async Task<IActionResult> GetProfile([FromQuery]UserProfile profile,CancellationToken cancellationToken=default)
     {
@@ -51,6 +53,9 @@ public class UserManagementController:ControllerBase
         }
     }
 
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [HttpPost("createUser")]
     public async Task<IActionResult> CreateProfile([FromBody]DynamicProfileModel profileModel, CancellationToken cancellationToken = default)
     {
@@ -72,6 +77,9 @@ public class UserManagementController:ControllerBase
             return BadRequest(new BaseResponseModel(false, "Validation failed", errors, 400));
         }
     }
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [HttpPut("updateuser")]
     public async Task<IActionResult> UpdateProfile([FromBody]DynamicProfileModel profileModel, CancellationToken cancellationToken = default)
     {
@@ -94,6 +102,9 @@ public class UserManagementController:ControllerBase
             return BadRequest(new BaseResponseModel(false, "Validation failed", errors, 400));
         }
     }
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [HttpDelete("deleteuser")]
     public async Task<IActionResult> DeactiveProfile(UserProfile profile, CancellationToken cancellationToken = default)
     {
@@ -101,10 +112,12 @@ public class UserManagementController:ControllerBase
         ValidationResult validationResult = await validator.ValidateAsync(profile);
         if (!validationResult.Errors.Any())
         {
-            var responses=await _mediator.Send(_mapper.Map<DeactiveProfileCommand>(profile),cancellationToken);
+            DeactiveProfileCommand deactiveProfileCommand = _mapper.Map<DeactiveProfileCommand>(profile);
+            
+            var responses=await _mediator.Send(deactiveProfileCommand,cancellationToken);
             var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
             return Ok(responses
-                ? new BaseResponseModel(true, "Something Is Wrong", errors, 201)
+                ? new BaseResponseModel(true, "User Deleted Successful", errors, 201)
                 : BadRequest(new BaseResponseModel(false, "Something Is Wrong", errors, 400)));
         }
         else
@@ -114,3 +127,7 @@ public class UserManagementController:ControllerBase
         }
     }
 }
+
+//AdminAdmin
+//AdminAdmin
+//AdminAdmin@gmail.com

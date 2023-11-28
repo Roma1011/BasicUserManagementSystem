@@ -16,9 +16,9 @@ namespace Persistance.Migrations
                 {
                     UserProfileId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonalNumber = table.Column<long>(type: "bigint", nullable: false)
+                    FirstName = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
+                    LastName = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
+                    PersonalNumber = table.Column<long>(type: "BIGINT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,10 +31,10 @@ namespace Persistance.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    UserName = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
+                    Password = table.Column<byte[]>(type: "VARBINARY(500)", maxLength: 500, nullable: false),
+                    Email = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
+                    IsActive = table.Column<bool>(type: "BIT", maxLength: 50, nullable: false),
                     UserProfileId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -51,7 +51,8 @@ namespace Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserProfileId",
                 table: "Users",
-                column: "UserProfileId");
+                column: "UserProfileId",
+                unique: true);
         }
 
         /// <inheritdoc />

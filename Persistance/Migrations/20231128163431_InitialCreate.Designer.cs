@@ -11,7 +11,7 @@ using Persistance.DatabseContext;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(UserManagementDbContext))]
-    [Migration("20231128130121_InitialCreate")]
+    [Migration("20231128163431_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,27 +34,32 @@ namespace Persistance.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasMaxLength(50)
+                        .HasColumnType("BIT");
 
                     b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("VARBINARY");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("UserProfileId")
+                        .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.UserProfile", b =>
@@ -67,25 +72,27 @@ namespace Persistance.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<long>("PersonalNumber")
-                        .HasColumnType("bigint");
+                        .HasColumnType("BIGINT");
 
                     b.HasKey("UserProfileId");
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Entities.UserProfile", "UserProfile")
-                        .WithMany()
-                        .HasForeignKey("UserProfileId")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.User", "UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

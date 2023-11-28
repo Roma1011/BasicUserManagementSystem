@@ -16,13 +16,10 @@ public class AuthController:ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly IValidator<AuthModel> _validator;
-
-    public AuthController(IMediator mediator, IMapper mapper, IValidator<AuthModel> validator)
+    public AuthController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
-        _validator = validator;
     }
 
     [HttpPost("login")]

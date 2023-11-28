@@ -12,12 +12,11 @@ public class DeactiveProfileHandler:IRequestHandler<DeactiveProfileCommand,bool>
     {
         _unitOfWork = unitOfWork;
     }
-
     public async Task<bool> Handle(DeactiveProfileCommand request, CancellationToken cancellationToken)
     {
-        var user =await _unitOfWork.UserRepository.GetAsync(i => i.UserId == request.UserId && i.IsActive==false);
+        var user =await _unitOfWork.UserRepository.GetAsync(i => i.UserId == request.UserId && i.IsActive!=false);
 
-        if (user is not null)
+        if (user is null)
             throw new UserNotAvailableException();
         
         user.IsActive = false;

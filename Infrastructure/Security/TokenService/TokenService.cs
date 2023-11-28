@@ -26,8 +26,9 @@ public class TokenService:ITokenService
         {
             new Claim(TokenClaimTypes.UserName, userName)
         };
-        SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Token").Value));
-        SigningCredentials credentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha512);
+        string secretKey = _configuration.GetSection("Token").Value;
+        SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        SigningCredentials credentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha256);
         SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(claims),

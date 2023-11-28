@@ -29,14 +29,15 @@ public class AutoMapperProfiler:Profile
                 src.PersonalNumber
             )));
         CreateMap<DynamicProfileModel, UpdateProfileCommand>()
-            .ConstructUsing((src, context) => new UpdateProfileCommand(
-                Id: 0,
-                ProfileDto: context.Mapper.Map<DynamicProfileDto>(src)
-            ));
-        CreateMap<DynamicProfileModel,UpdateProfileCommand>().ReverseMap();
+            .ConstructUsing(src => new UpdateProfileCommand(new DynamicProfileDto(
+                src.UserName,
+                src.Password,
+                src.Email,
+                src.FirstName,
+                src.LastName,
+                src.PersonalNumber
+            ))).ReverseMap();
         CreateMap<UserProfile,DeactiveProfileCommand>().ReverseMap();
         #endregion
-        
-        
     }
 }

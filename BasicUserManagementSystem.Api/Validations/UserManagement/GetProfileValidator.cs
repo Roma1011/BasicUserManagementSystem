@@ -9,10 +9,7 @@ public class GetProfileValidator:AbstractValidator<UserProfile>
     public GetProfileValidator()
     {
         RuleFor(user => user.UserId)
-            .NotNull()
-            .WithMessage("UserId is required.");
-        RuleFor(user => user.UserId)
-            .NotEmpty()
-            .WithMessage("UserId is required.");
+            .NotNull().WithMessage("UserId is required.")
+            .NotEmpty().WithMessage("UserId is required.");
     }
 }

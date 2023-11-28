@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="MiddleWares\Exception" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.8.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
       <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
@@ -26,6 +22,22 @@
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\Persistance\Persistance.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="MiddleWares\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="MiddleWares\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="MiddleWares\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="MiddleWares\**" />
     </ItemGroup>
 
 </Project>
