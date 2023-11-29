@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Application.Shared;
-using Domain.Abstractions;
+﻿using Domain.Abstractions;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace Application.UserManagement.Command.GetProfile
+namespace Application.UserManagement.UserManagementRootCommand.GetProfile
 {
     public class GetProfileHandler : IRequestHandler<GetProfileCommand, Shared.GetProfile>
     {
@@ -25,6 +24,7 @@ namespace Application.UserManagement.Command.GetProfile
                     where user.UserId == request.UserId || user.Email==request.UserEmail && user.IsActive 
                     select new Shared.GetProfile
                     {
+                        Id = user.UserId,
                         UserName = user.UserName,
                         Email = user.Email,
                         FirstName = userProfile.FirstName,

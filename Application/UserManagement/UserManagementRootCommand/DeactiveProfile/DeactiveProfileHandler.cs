@@ -2,7 +2,7 @@
 using Domain.Exceptions;
 using MediatR;
 
-namespace Application.UserManagement.Command.DeactiveProfile;
+namespace Application.UserManagement.UserManagementRootCommand.DeactiveProfile;
 
 public class DeactiveProfileHandler:IRequestHandler<DeactiveProfileCommand,bool>
 {

@@ -4,7 +4,7 @@ using Domain.Exceptions;
 using Domain.IServices.ISecuriyServices;
 using MediatR;
 
-namespace Application.UserManagement.Command.CreateProfile;
+namespace Application.UserManagement.UserManagementRootCommand.CreateProfile;
 
 public class CreateProfileHandler:IRequestHandler<CreateProfileCommand,bool>
 {

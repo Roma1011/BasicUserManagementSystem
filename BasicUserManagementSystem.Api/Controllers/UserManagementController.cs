@@ -1,7 +1,7 @@
-﻿using Application.UserManagement.Command.CreateProfile;
-using Application.UserManagement.Command.DeactiveProfile;
-using Application.UserManagement.Command.GetProfile;
-using Application.UserManagement.Command.UpdateProfile;
+﻿using Application.UserManagement.UserManagementRootCommand.CreateProfile;
+using Application.UserManagement.UserManagementRootCommand.DeactiveProfile;
+using Application.UserManagement.UserManagementRootCommand.GetProfile;
+using Application.UserManagement.UserManagementRootCommand.UpdateProfile;
 using AutoMapper;
 using BasicUserManagementSystem.Models;
 using BasicUserManagementSystem.Models.UserManagement;

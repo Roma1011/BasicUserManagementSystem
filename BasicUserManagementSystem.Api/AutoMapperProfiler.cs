@@ -1,9 +1,12 @@
 ﻿using Application.Auth.Command;
 using Application.Shared;
-using Application.UserManagement.Command.CreateProfile;
-using Application.UserManagement.Command.DeactiveProfile;
-using Application.UserManagement.Command.GetProfile;
-using Application.UserManagement.Command.UpdateProfile;
+using Application.UserManagement.JsonplaceholderCommand.GetComments;
+using Application.UserManagement.JsonplaceholderCommand.GetPhotos;
+using Application.UserManagement.JsonplaceholderCommand.GetPosts;
+using Application.UserManagement.UserManagementRootCommand.CreateProfile;
+using Application.UserManagement.UserManagementRootCommand.DeactiveProfile;
+using Application.UserManagement.UserManagementRootCommand.GetProfile;
+using Application.UserManagement.UserManagementRootCommand.UpdateProfile;
 using AutoMapper;
 using BasicUserManagementSystem.Models.Auth;
 using BasicUserManagementSystem.Models.UserManagement;
@@ -38,6 +41,17 @@ public class AutoMapperProfiler:Profile
                 src.PersonalNumber
             ))).ReverseMap();
         CreateMap<UserProfile,DeactiveProfileCommand>().ReverseMap();
+        #endregion
+        #region JsonPlaceHolder
+        CreateMap<int, GetPhotoCommand>()
+            .ConstructUsing(userId => new GetPhotoCommand(userId));
+
+        CreateMap<int, GetCommentCommand>()
+            .ConstructUsing(userId => new GetCommentCommand(userId));
+
+        CreateMap<int, GetPostCommand>()
+            .ConstructUsing(userId => new GetPostCommand(userId));
+
         #endregion
     }
 }

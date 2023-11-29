@@ -3,7 +3,7 @@ using Domain.Exceptions;
 using Domain.IServices.ISecuriyServices;
 using MediatR;
 
-namespace Application.UserManagement.Command.UpdateProfile;
+namespace Application.UserManagement.UserManagementRootCommand.UpdateProfile;
 
 public class UpdateProfileHandler : IRequestHandler<UpdateProfileCommand, bool>
 {
