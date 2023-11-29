@@ -17,10 +17,12 @@ namespace Application.UserManagement.Command.GetProfile
 
         public async Task<Shared.GetProfile> Handle(GetProfileCommand request, CancellationToken cancellationToken)
         {
+            if (request.UserId == null && request.UserEmail == null)
+                throw new InvalidOperationException();
             var profile = await (
                     from user in _unitOfWork.UserRepository.Set
                     join userProfile in _unitOfWork.UserProfileRepository.Set on user.UserProfileId equals userProfile.UserProfileId
-                    where user.UserId == request.UserId && user.IsActive 
+                    where user.UserId == request.UserId || user.Email==request.UserEmail && user.IsActive 
                     select new Shared.GetProfile
                     {
                         UserName = user.UserName,

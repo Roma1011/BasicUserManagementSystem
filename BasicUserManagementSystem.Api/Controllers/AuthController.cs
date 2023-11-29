@@ -21,7 +21,9 @@ public class AuthController:ControllerBase
         _mediator = mediator;
         _mapper = mapper;
     }
-
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [HttpPost("login")]
     public async Task<IActionResult> Authorize([FromBody] AuthModel authModel, CancellationToken cancellationToken = default)
     {

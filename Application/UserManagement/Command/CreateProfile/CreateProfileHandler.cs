@@ -18,8 +18,13 @@ public class CreateProfileHandler:IRequestHandler<CreateProfileCommand,bool>
 
     public async Task<bool> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        var result=await _unitOfWork.UserRepository.AnyAsync(i => i.Email == request.ProfileDto.Email || request.ProfileDto.PersonalNumber==i.UserProfile.PersonalNumber);
-        if (result)
+        var result=await _unitOfWork.UserRepository.AnyAsync(i => i.Email == request.ProfileDto.Email || request.ProfileDto.PersonalNumber==i.UserProfile.PersonalNumber && i.IsActive==false);
+        var resultdublicate=await _unitOfWork.UserRepository.AnyAsync(i => i.Email == request.ProfileDto.Email || request.ProfileDto.PersonalNumber==i.UserProfile.PersonalNumber && i.IsActive==true);
+        if (result && resultdublicate)
+        {
+            throw new ContaxtYourSapportException();
+        }
+        else if (resultdublicate)
         {
             throw new UserAlreadyExistsException();
         }

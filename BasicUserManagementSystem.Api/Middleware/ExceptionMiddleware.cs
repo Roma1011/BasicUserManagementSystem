@@ -31,36 +31,55 @@ public class ExceptionMiddleware
 
         switch (ex)
         {
-            case InvalidUserCredentialsException carNotFoundException:
+            case InvalidUserCredentialsException invalidUserCredentialsException:
                 statusCode = HttpStatusCode.BadRequest;
                 problem = new CostumValidationProblemDetails
                 {
-                    Title = carNotFoundException.Message,
+                    Title = invalidUserCredentialsException.Message,
                     Status = (int)statusCode,
-                    Detail = carNotFoundException.InnerException?.Message,
+                    Detail = invalidUserCredentialsException.InnerException?.Message,
                     Type = nameof(InvalidUserCredentialsException)
                 };
                 break;
             
-            case UserAlreadyExistsException companyNotFoundException:
+            case UserAlreadyExistsException userAlreadyExistsException:
                 statusCode = HttpStatusCode.BadRequest;
                 problem = new CostumValidationProblemDetails
                 {
-                    Title = companyNotFoundException.Message,
+                    Title = userAlreadyExistsException.Message,
                     Status = (int)statusCode,
-                    Detail = companyNotFoundException.InnerException?.Message,
+                    Detail = userAlreadyExistsException.InnerException?.Message,
                     Type = nameof(UserAlreadyExistsException)
                 };
                 break;
-            
-            case UserNotAvailableException userNotFoundException:
+            case ContaxtYourSapportException contaxtYourSapportException:
                 statusCode = HttpStatusCode.BadRequest;
                 problem = new CostumValidationProblemDetails
                 {
-                    Title = userNotFoundException.Message,
+                    Title = contaxtYourSapportException.Message,
                     Status = (int)statusCode,
-                    Detail = userNotFoundException.InnerException?.Message,
+                    Detail = contaxtYourSapportException.InnerException?.Message,
+                    Type = nameof(ContaxtYourSapportException)
+                };
+                break;
+            case UserNotAvailableException userNotAvailableException:
+                statusCode = HttpStatusCode.BadRequest;
+                problem = new CostumValidationProblemDetails
+                {
+                    Title = userNotAvailableException.Message,
+                    Status = (int)statusCode,
+                    Detail = userNotAvailableException.InnerException?.Message,
                     Type = nameof(UserNotAvailableException)
+                };
+                break;
+            case InvalidOperationException invalidOperationException:
+                statusCode = HttpStatusCode.BadRequest;
+                problem = new CostumValidationProblemDetails
+                {
+                    Title = invalidOperationException.Message,
+                    Status = (int)statusCode,
+                    Detail = invalidOperationException.InnerException?.Message,
+                    Type = nameof(InvalidOperationException)
                 };
                 break;
             default: 

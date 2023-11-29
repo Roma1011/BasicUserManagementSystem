@@ -8,8 +8,9 @@ public class GetProfileValidator:AbstractValidator<UserProfile>
 {
     public GetProfileValidator()
     {
-        RuleFor(user => user.UserId)
-            .NotNull().WithMessage("UserId is required.")
-            .NotEmpty().WithMessage("UserId is required.");
+        RuleFor(user => user)
+            .Must(user => user.UserId != null || !string.IsNullOrWhiteSpace(user.UserEmail))
+            .WithMessage("At least one field (UserId or UserEmail) must be filled");
+
     }
 }
