@@ -21,3 +21,15 @@ dotnet ef database update --context UserManagementDbContext --project .\Persista
 please when you use migrations here no one user is created disable [Authorize] and create user and later anable if you use Beckoup way just use upper field
 
 thanks.
+
+
+
+Sumerize
+Technologies used and architecture
+1) Clean Architecture Way
+2) CQRS
+3) MEDIATR
+4) AUTO MAPPER
+5) JSON WEB TOKEN
+6) EF CORE
+7) FLUENTVALIDATION
